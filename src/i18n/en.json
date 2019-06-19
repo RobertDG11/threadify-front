@@ -1,0 +1,36 @@
+{
+  "ro": "Romanian",
+  "en": "English",
+  "option": "Language",
+  "login": "Login",
+  "register": "Register",
+  "logout": "Logout",
+  "home": "Home",
+  "prof": "Professors",
+  "book": "Book a room",
+  "form": "Quiz of the day",
+  "meet": "Come meet us!",
+  "location": "Our location",
+  "istoric": "\r\nThe beginnings of today's \"Al.I.Cuza\" College can be established in\r\n1889, when a group of teachers set up a secondary outfit for girls,\r\ndirectors being Eliza C. Lupu. As any beginning is not without problems,\r\nat a time when education, especially for girls, did not\r\nsufficient resources. That's why teachers teach for free\r\nfor two years, and the school became public only in 1901. The First War\r\nthe world brings to Focsani a new and difficult situation: the German occupation.\r\nIt is time for the same Eliza C.Lupu to decide together with a group of\r\nteachers set up a private girls' high school, which in 1921 will be\r\nrecognized as a public school, but only in 1923 the first grade will be passed into\r\nthe budget of the state, and in 1924 it would pass all the lower course, and in\r\n1925 and the upper one. In 1926 the girls' high school will move to their own home\r\nfrom Calea Cuza Voda 43, at the disposal of the Ministry of Instruction\r\nPublic. As the locality becomes inconspicuous, it will be in the yard of the school\r\nbuild from 1930 a new, one-storey new home with 10 halls\r\nclass and two chancelleries. In the school year 1941/1942 Theoretical High School\r\ngirls from Foc\u015Fani were transformed from high school C (8 classes) into\r\nhigh school D (12-grade). The name \"Alexandru Ioan Cuza\" will be given\r\ninstitution in 1958, then the Middle School Mixed, only in 1965\r\nthe name of \"Alexandru I. Cuza\" High School is required, and since 1990 the High School\r\nTheoretically \"Al. I. Cuza\", transformed in 1999-2000, as a recognition of\r\nof its value in the \"Al. I. Cuza\" National College.",
+  "istoricTitle": "Brief history of College",
+  "students": {
+    "title": "Students with remarkable results",
+    "content": "From the National College \"Al.I.Cuza\" there are people who have high positions in the whole country and not only. From engineers, teachers, scientists, politicians and doctors."
+  },
+  "professors": {
+    "title": "The most prestigious teachers",
+    "content": "High school may be proud of some of the best teachers\r\n        results from the entire county. It is said to be the most important in the first\r\n        years of training a student is taught. It can either help you,\r\n        be tangled. The behavior of young people is influenced in proportion\r\n        70% of high school teachers.",
+    "meet": "Meet them!"
+  },
+  "why": {
+    "title": "Why CNAIC?",
+    "content": "Because it is more than a school with recognized tradition and performance, with outstanding teachers and classes opening up to the new. When we opt for this college, we actually choose a feeling that defines our youth, the first steps toward our affirmation and formation as an intellectual and spiritual identity. Here is not the word loneliness, but the living under the sign of the cuzic spirit, a sort of new ordering in the soul of all values \u200B\u200Bin fulfillment and the future. The time spent in an hour of course is the guarantee of a high-level presence through work, tenacity, dedication, and a self-directed future by simply taking responsibility for being a pupil at Cuza. And each teacher keeps for one hour a second called \"stop for a moment!\". Then, what is most beautiful is given to become, in time, the memory of us, the coworkers of yesterday, today and of anger ... Friends, I must tell you how you can sit under the wing of a future more durable and brighter! Come to Cuza, sincerely believing that \"being\" here is the beginning for \"being\" ... whatever you want. It is about education, communication, the freedom to assume the true values, namely, the happiness of a time that inevitably passes, and yet, for the cuzist, never passes."
+  },
+  "map": {
+    "title": "Where can you find us?",
+    "content": "\r\nI've prepared an interesting gameplay for you because we know you\r\n          like adventure. In the city I have hidden in various locations CNC logos\r\n          in the hope that you will find them. You will see some markers on the map\r\n          green which represent the locations that have already been found. With a simple one\r\n          click on those markers you will be able to find more info about\r\n          location. If you pass by a location that has a logo\r\n          CNC, you will surely notice it. What should you do?",
+    "first": "Dress up with your adventure clothes.",
+    "second": "Search through the city one of the locations where we've hidden a logo.",
+    "third": "When you find something, contact us and we'll show you a special marker for you on the map."
+  }
+}

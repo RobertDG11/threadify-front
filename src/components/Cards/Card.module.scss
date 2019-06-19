@@ -1,0 +1,34 @@
+$breakpoint-mobile: 414px;
+$breakpoint-tablet: 768px;
+$breakpoint-bigDevice: 990px;
+
+.Card {
+  margin: 2em !important;
+
+  &Clicked {
+    position: fixed !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    z-index: 1100 !important;
+  }
+
+  @media screen and (min-width: $breakpoint-bigDevice) {
+    max-width: 170px !important;
+    &:hover {
+      transform: scale(1.3) !important;
+    }
+  }
+}
+
+.CardGroup {
+  margin: 0 8em !important;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    margin: 0 2em !important;
+  }
+
+  @media screen and (max-width: $breakpoint-bigDevice) {
+    margin: 0 4em !important;
+  }
+}
