@@ -4,13 +4,23 @@ import {
   AUTHENTICATE,
   DEAUTHENTICATE,
   GET_SESSION,
+  GET_FRIENDS,
+  GET_GROUPS,
   SUCCESS_MESSAGE,
-  ERROR_MESSAGE
+  ERROR_MESSAGE,
+  JOIN_GROUP,
+  LEAVE_GROUP,
+  UPDATE_GROUP
 } from "../constants/index";
+
+import { toast } from "react-toastify";
+import { getThread } from "./threadReducer";
 
 const initialState = {
   isAuth: false,
   user: {},
+  friends: [],
+  groups: [],
   token: "",
   successMessage: "",
   errorMessage: ""
@@ -31,11 +41,39 @@ function authReducer(state = initialState, action) {
     case GET_SESSION:
       const isAuth =
         action.payload && action.payload.data && action.payload.data.activated;
-      console.log(action.payload.data);
       return {
         ...state,
         isAuth,
         user: action.payload.data
+      };
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload.data
+      };
+    case GET_GROUPS:
+      return {
+        ...state,
+        groups: action.payload.data
+      };
+
+    case UPDATE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.map(group =>
+          group.id === action.payload.id ? (group = action.payload) : group
+        )
+      };
+
+    case JOIN_GROUP:
+      return {
+        ...state,
+        groups: [...state.groups, action.payload]
+      };
+    case LEAVE_GROUP:
+      return {
+        ...state,
+        groups: state.groups.filter(group => group.id !== action.payload.id)
       };
     case SUCCESS_MESSAGE:
       return {
@@ -53,10 +91,73 @@ function authReducer(state = initialState, action) {
 }
 
 export const getSession = () => async (dispatch, getState) => {
+  const response = await axios.get("/account");
   await dispatch({
     type: GET_SESSION,
-    payload: await axios.get("/account")
+    payload: response
   });
+
+  await dispatch({
+    type: GET_FRIENDS,
+    payload: await axios.get(`/friends/${response.data.login}`)
+  });
+
+  await dispatch({
+    type: GET_GROUPS,
+    payload: await axios.get(`/groups/${response.data.login}`)
+  });
+};
+
+export const joinGroup = (user, thread) => async dispatch => {
+  try {
+    const response = await axios.put(
+      `/group-models/user/${user}/thread/${thread}`
+    );
+    dispatch({
+      type: JOIN_GROUP,
+      payload: response.data
+    });
+    dispatch(getThread(thread));
+  } catch (e) {
+    toast.error("Something happened! Please try again!", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
+};
+
+export const leaveGroup = (user, thread) => async dispatch => {
+  try {
+    const response = await axios.delete(
+      `/group-models/user/${user}/thread/${thread}`
+    );
+
+    dispatch({
+      type: LEAVE_GROUP,
+      payload: response.data
+    });
+    dispatch(getThread(thread));
+  } catch (e) {
+    toast.error("Something happened! Please try again!", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
+};
+
+export const updateGroup = (threadId, users) => async dispatch => {
+  try {
+    const response = await axios.put(`/group-models/${threadId}`, users);
+
+    console.log(response.data);
+    dispatch({
+      type: UPDATE_GROUP,
+      payload: response.data
+    });
+    dispatch(getThread(threadId));
+  } catch (e) {
+    toast.error("Something happened! Please try again!", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
 };
 
 export const login = (username, password, rememberMe = false) => async (

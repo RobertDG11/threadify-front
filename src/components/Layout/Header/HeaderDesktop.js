@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import DesktopMenu from "./Menu/Desktop/DesktopMenu";
 import DesktopMenuDiff from "./Menu/Desktop/DesktopMenuDiff";
-import { Segment, Visibility, Icon } from "semantic-ui-react";
+import { Segment, Visibility, Icon, Sticky, Ref } from "semantic-ui-react";
 import Carousel from "./Carousel/Carousel";
 import WindowSize from "../../../hoc/WindowSize";
 import Aux from "../../../hoc/aux";
 import { scroller } from "react-scroll";
 
 import styles from "./Header.module.scss";
-import { classBody } from "@babel/types";
 
 class HeaderDesktop extends Component {
   state = {};
@@ -36,30 +35,63 @@ class HeaderDesktop extends Component {
         onOffScreen={this.showFixedMenu}
         onOnScreen={this.hideFixedMenu}
       >
-        <Segment
-          style={{ height: height }}
-          inverted
-          color="blue"
-          textAlign="center"
-          className={className}
-          vertical
-        >
-          {this.props.showCarousel ? (
-            <Aux>
-              <DesktopMenu fixed={fixed} />
+        {this.props.showCarousel ? (
+          <Segment
+            style={{ height: height }}
+            inverted
+            color="blue"
+            textAlign="center"
+            className={className}
+            vertical
+          >
+            {this.props.showCarousel ? (
+              <Aux>
+                <DesktopMenu fixed={fixed} />
 
-              <div onClick={this.handleClick} className={styles.ArrowPosition}>
-                <Icon
-                  name="angle double down"
-                  size="huge"
-                  className={styles.CenterArrowBounce}
-                />
-              </div>
-            </Aux>
-          ) : (
-            <DesktopMenuDiff />
-          )}
-        </Segment>
+                <div
+                  onClick={this.handleClick}
+                  className={styles.ArrowPosition}
+                >
+                  <Icon
+                    name="angle double down"
+                    size="huge"
+                    className={styles.CenterArrowBounce}
+                  />
+                </div>
+              </Aux>
+            ) : (
+              <DesktopMenuDiff />
+            )}
+          </Segment>
+        ) : (
+          <Segment
+            style={{ height: height }}
+            inverted
+            color="blue"
+            textAlign="center"
+            className={className}
+            vertical
+          >
+            {this.props.showCarousel ? (
+              <Aux>
+                <DesktopMenu fixed={fixed} />
+
+                <div
+                  onClick={this.handleClick}
+                  className={styles.ArrowPosition}
+                >
+                  <Icon
+                    name="angle double down"
+                    size="huge"
+                    className={styles.CenterArrowBounce}
+                  />
+                </div>
+              </Aux>
+            ) : (
+              <DesktopMenuDiff />
+            )}
+          </Segment>
+        )}
       </Visibility>
     );
   }

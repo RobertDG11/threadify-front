@@ -5,10 +5,12 @@ import authReducer from "./reducers/authReducer";
 import schedulerReducer from "./reducers/schedulerReducer";
 import literalsReducer from "./reducers/literalsReducer";
 import formReducer from "./reducers/formReducer";
+import threadReducer from "./reducers/threadReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+import postReducer from "./reducers/postReducer";
 
 const persistConfigCarousel = {
   key: "showCarousel",
@@ -41,7 +43,9 @@ const reducer = combineReducers({
   auth: persistedReducerAuth,
   scheduler: schedulerReducer,
   literals: literalsReducer,
-  formCustom: persistedReducerForm
+  formCustom: persistedReducerForm,
+  posts: postReducer,
+  threads: threadReducer
 });
 
 export const store = createStore(

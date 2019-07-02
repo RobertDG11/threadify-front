@@ -3,9 +3,13 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
 class ConnectedAuthRoute extends Component {
+  componentWillMount = () => {
+    if (!this.props.isAuth) {
+      this.props.modifyOpenModal();
+    }
+  };
   hasPermission = userType => {
     if (this.props.isAuth) {
-      console.log(this.props.userType);
       switch (userType) {
         case 0:
           return this.props.userType.length === 2;
@@ -23,12 +27,12 @@ class ConnectedAuthRoute extends Component {
       <Route
         {...rest}
         render={props =>
-          this.hasPermission(type) ? (
+          this.props.isAuth ? (
             <Component {...props} {...rest} />
           ) : (
             <Redirect
               to={{
-                pathname: "/front"
+                pathname: "/login"
               }}
             />
           )
@@ -45,6 +49,15 @@ const mapStateToProps = state => {
   };
 };
 
-const AuthRoute = connect(mapStateToProps)(ConnectedAuthRoute);
+function mapDispatchToProps(dispatch) {
+  return {
+    modifyOpenModal: () => dispatch({ type: "CREATE_THREAD" })
+  };
+}
+
+const AuthRoute = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedAuthRoute);
 
 export default AuthRoute;

@@ -67,7 +67,13 @@ class ConnectedDesktopMenuDiff extends Component {
     ];
 
     return (
-      <Menu size="small" inverted className={styles.Color}>
+      <Menu
+        size="small"
+        inverted
+        className={styles.Color}
+        color="blue"
+        fixed="top"
+      >
         <MenuItem style={{ padding: "0 0.5em" }}>
           <Image src={logo} size="mini" />
         </MenuItem>
@@ -84,8 +90,8 @@ class ConnectedDesktopMenuDiff extends Component {
           as={NavLink}
           exact
           to="/front"
-          name="home"
-          onClick={this.handleItemClick}
+          name="front"
+          onClick={this.handleCarousel}
         >
           Frontpage
         </MenuItem>

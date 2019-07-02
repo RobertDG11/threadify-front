@@ -7,9 +7,7 @@ import { withRouter } from "react-router-dom";
 
 const ConnectedLayout = props => (
   <ResponsiveContainer showCarousel={props.showCarousel}>
-    <Segment style={{ padding: "8em 0em" }} vertical>
-      {props.children}
-    </Segment>
+    {props.children}
   </ResponsiveContainer>
 );
 

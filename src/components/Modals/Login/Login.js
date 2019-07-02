@@ -20,8 +20,6 @@ import { toast } from "react-toastify";
 
 class ConnectedLogin extends Component {
   componentDidMount() {
-    // If the OAuth2 login encounters an error, the user is redirected to the /login page with an error.
-    // Here we display the error and then remove the error query parameter from the location.
     if (this.props.location.state && this.props.location.state.error) {
       setTimeout(() => {
         toast.error(this.props.location.state.error, {

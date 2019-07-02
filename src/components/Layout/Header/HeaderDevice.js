@@ -15,7 +15,6 @@ const HeaderDevice = props => {
       vertical
     >
       <DeviceMenu handleToggle={props.handleToggle} />
-      {props.showCarousel ? <Carousel mobile slides={[1, 2, 3]} /> : null}
     </Segment>
   );
 };

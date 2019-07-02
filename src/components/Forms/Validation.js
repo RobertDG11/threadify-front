@@ -1,24 +1,23 @@
 import zxcvbn from "zxcvbn";
 
-export const Required = value =>
-  value ? undefined : "Acest camp este obligatoriu";
+export const Required = value => (value ? undefined : "This is required field");
 
 export const Email = value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? "Adresa de email invalida"
+    ? "Invalid email address"
     : undefined;
 
 export const PasswordStrength = value =>
   value && zxcvbn(value).score > 2
     ? undefined
-    : "Parola trebuie sa aiba ratingul cel putin bun";
+    : "Password should be at least good";
 
 export const Confirm = values => {
   const errors = {};
   errors["password_confirmation"] =
     values["password"] === values["password_confirmation"]
       ? undefined
-      : "Parolele nu se potrivesc";
+      : "Passwords are not the same";
   return errors;
 };
 

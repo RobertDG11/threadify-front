@@ -10,6 +10,7 @@ import Professors from "./components/Cards/SimpleCards";
 import { PersistGate } from "redux-persist/integration/react";
 import LoginRoute from "./components/Routes/LoginRoute";
 import AuthRoute from "./components/Routes/AuthRoute";
+import ScrollToTopRoute from "./components/Routes/ScrollToTopRoute";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { loadLiterals } from "./components/redux/actions/actions";
@@ -20,6 +21,8 @@ import { bindActionCreators } from "redux";
 import { clearAuthentication } from "./components/redux/reducers/authReducer";
 import OAuth2RedirectHandler from "./components/Modals/Login/OAuthRedirectHandler";
 import Frontpage from "./components/Layout/Frontpage";
+import ThreadRoutes from "./components/Thread/index";
+import PostRoutes from "./components/Posts/index";
 
 const actions = bindActionCreators({ clearAuthentication }, store.dispatch);
 setupAxiosInterceptors(() => actions.clearAuthentication());
@@ -41,13 +44,11 @@ class App extends Component {
             <div className="Test">
               <Layout>
                 <Switch>
-                  <Route exact path="/" component={Homepage} />
-                  <Route path="/front" component={Frontpage} />
-                  <AuthRoute
-                    path="/profesori"
-                    type={1}
-                    component={Professors}
-                  />
+                  <ScrollToTopRoute exact path="/" component={Homepage} />
+                  <ScrollToTopRoute path="/front" component={Frontpage} />
+                  <ScrollToTopRoute path="/thread" component={ThreadRoutes} />
+                  <ScrollToTopRoute path="/post" component={PostRoutes} />
+
                   <LoginRoute exact path="/login" component={Homepage} />
                   <LoginRoute exact path="/register" component={Homepage} />
                   <Route
