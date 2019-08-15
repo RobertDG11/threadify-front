@@ -23,9 +23,6 @@ import { getThreads } from "../redux/reducers/threadReducer";
 import WindowSize from "../../hoc/WindowSize";
 
 const initialState = {
-  isLoading: false,
-  results: [],
-  value: "",
   threads: []
 };
 
@@ -48,6 +45,7 @@ class ConnectedCreatePost extends Component {
 
     this.setState({
       threads: threads.data.map(thread => ({
+        id: thread.id,
         title: thread.name,
         image: thread.coverPhoto,
         description: `Members ${getVotes(thread.users)}`
@@ -91,16 +89,6 @@ class ConnectedCreatePost extends Component {
           <Grid.Row />
           <Grid.Column computer={3} tablet={2} />
           <Grid.Column computer={10} tablet={12} style={{ maxWidth: 1000 }}>
-            <Search
-              loading={isLoading}
-              onResultSelect={this.handleResultSelect}
-              onSearchChange={_.debounce(this.handleSearchChange, 500, {
-                leading: true
-              })}
-              results={results}
-              value={value}
-              style={{ marginBottom: "15px" }}
-            />
             <Segment
               vertical
               raised
@@ -112,7 +100,7 @@ class ConnectedCreatePost extends Component {
               <Header as="h2" style={{ paddingTop: "30px" }} textAlign="center">
                 Create new post
               </Header>
-              <NewPostForm type="front" />
+              <NewPostForm threads={this.state.threads} />
             </Segment>
           </Grid.Column>
           <Grid.Column computer={3} tablet={2} />

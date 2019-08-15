@@ -132,17 +132,21 @@ class Post extends Component {
   };
 
   render() {
+    const style =
+      this.props.type === "post"
+        ? {
+            marginTop: "20px",
+            padding: 0,
+            marginBottom: "2em"
+          }
+        : {
+            padding: 0,
+            maxHeight: "650px",
+            overflow: "hidden",
+            marginBottom: "2em"
+          };
     return (
-      <Segment
-        vertical
-        raised
-        style={{
-          padding: 0,
-          maxHeight: "650px",
-          overflow: "hidden",
-          marginBottom: "2em"
-        }}
-      >
+      <Segment vertical raised style={style}>
         <Grid.Row
           stretched
           style={{
@@ -232,7 +236,7 @@ class Post extends Component {
                 <Image centered src={this.props.media} />
               )}
               <Container style={{ marginTop: 13, paddingBottom: 36 }}>
-                <p>{ReactHtmlParser(parseText(this.props.text))}</p>
+                {ReactHtmlParser(parseText(this.props.text))}
               </Container>
             </Grid.Row>
           </Grid.Column>

@@ -1,6 +1,7 @@
 import React, { Component, createRef } from "react";
 import Aux from "../../hoc/aux";
 import { resetPosts } from "../redux/reducers/postReducer";
+import { NavLink } from "react-router-dom";
 import {
   Segment,
   Header,
@@ -212,6 +213,8 @@ class ConnectedThread extends Component {
                     </Button>
                   )}
                   <Button
+                    as={NavLink}
+                    to="/post/new"
                     disabled={
                       this.props.auth.isAuth
                         ? this.props.auth.groups.find(
@@ -332,6 +335,8 @@ class ConnectedThread extends Component {
                       </Button>
                     )}
                     <Button
+                      as={NavLink}
+                      to="/post/new"
                       disabled={
                         this.props.auth.isAuth
                           ? this.props.auth.groups.find(

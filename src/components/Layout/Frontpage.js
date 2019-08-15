@@ -68,34 +68,34 @@ class ConnectedFrontpage extends Component {
                   <Header.Content>Most popular threads</Header.Content>
                 </Header>
                 <List celled>
-                  <List.Item>
+                  <List.Item as={NavLink} to="/thread/11">
                     <Image
                       avatar
-                      src="https://react.semantic-ui.com/images/avatar/small/helen.jpg"
+                      src="https://res.cloudinary.com/robertdg11/image/upload/c_fill,h_729,r_0,w_2000/v1561818652/video_games_thread/video_games_cover.jpg"
                     />
                     <List.Content>
-                      <List.Header>Snickerdoodle</List.Header>
-                      An excellent companion
+                      <List.Header>Video Games</List.Header>
+                      Created by roby_buble2010@yahoo.com
                     </List.Content>
                   </List.Item>
-                  <List.Item>
+                  <List.Item as={NavLink} to="/thread/12">
                     <Image
                       avatar
-                      src="https://react.semantic-ui.com/images/avatar/small/daniel.jpg"
+                      src="https://res.cloudinary.com/robertdg11/image/upload/v1561842734/movies_thread/2400x780_Movie2014Banner.jpg"
                     />
                     <List.Content>
-                      <List.Header>Poodle</List.Header>A poodle, it's pretty
-                      basic
+                      <List.Header>Movies</List.Header>Created by
+                      roby_buble2010@yahoo.com
                     </List.Content>
                   </List.Item>
-                  <List.Item>
+                  <List.Item as={NavLink} to="/thread/15">
                     <Image
                       avatar
-                      src="https://react.semantic-ui.com/images/avatar/small/daniel.jpg"
+                      src="https://res.cloudinary.com/robertdg11/image/upload/v1562044673/threads/maxresdefault_qxb5g3.jpg"
                     />
                     <List.Content>
-                      <List.Header>Paulo</List.Header>
-                      He's also a dog
+                      <List.Header>Soccer</List.Header>
+                      Created by roby_buble2010@yahoo.com
                     </List.Content>
                   </List.Item>
                 </List>

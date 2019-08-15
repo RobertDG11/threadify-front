@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getPosts, resetPosts } from "../redux/reducers/postReducer";
 import BottomScrollListener from "react-bottom-scroll-listener";
 import Aux from "../../hoc/aux";
+import { NavLink } from "react-router-dom";
 
 const getVotes = votes => {
   if (votes > 999) {
@@ -30,12 +31,15 @@ class ConnectedPosts extends Component {
         10,
         "createdAt,desc",
         this.props.type,
-        this.props.threadId
+        this.props.threadId,
+        this.props.postId
       );
-      this.setState({
-        items: this.state.items + result.data.length,
-        posts: true
-      });
+      if (this.props.type !== "post") {
+        this.setState({
+          items: this.state.items + result.data.length,
+          posts: true
+        });
+      }
     }
   };
 
@@ -45,12 +49,15 @@ class ConnectedPosts extends Component {
       10,
       "createdAt,desc",
       this.props.type,
-      this.props.threadId
+      this.props.threadId,
+      this.props.postId
     );
-    this.setState({
-      items: this.state.items + result.data.length,
-      posts: true
-    });
+    if (this.props.type !== "post") {
+      this.setState({
+        items: this.state.items + result.data.length,
+        posts: true
+      });
+    }
   };
 
   refresh = () => {
@@ -66,24 +73,27 @@ class ConnectedPosts extends Component {
         ) : null}
         {posts.map(post => {
           return (
-            <Post
-              key={post.id}
-              id={post.id}
-              thread={post.threadName}
-              threadId={post.threadId}
-              owner={post.ownerUsername}
-              date={post.createdAt}
-              title={post.title}
-              tags={post.tags}
-              score={getVotes(post.score)}
-              media={post.media}
-              text={post.text}
-              comments={post.comments}
-              threadCover={post.threadCover}
-              votes={post.votes}
-              userId={this.props.user.id}
-              function={this.refresh}
-            />
+            <NavLink to={`/post/${post.id}`}>
+              <Post
+                key={post.id}
+                id={post.id}
+                thread={post.threadName}
+                threadId={post.threadId}
+                owner={post.ownerUsername}
+                date={post.createdAt}
+                title={post.title}
+                tags={post.tags}
+                score={getVotes(post.score)}
+                media={post.media}
+                text={post.text}
+                comments={post.comments}
+                threadCover={post.threadCover}
+                votes={post.votes}
+                userId={this.props.user.id}
+                function={this.refresh}
+                type={this.props.type}
+              />
+            </NavLink>
           );
         })}
       </Aux>

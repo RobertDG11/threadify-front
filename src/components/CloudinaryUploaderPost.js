@@ -40,11 +40,11 @@ class Uploader extends React.Component {
 
   handleChange = e => {
     this.setState({ media: `video ${e.target.value}` });
-    this.props.change(this.props.field, this.state.media);
+    this.props.change(this.props.field, `video ${e.target.value}`);
+    console.log(this.state.media);
   };
 
   render() {
-    console.log(this.state.media);
     return this.props.post ? (
       <Aux>
         <Button.Group style={{ marginTop: "20px", marginBottom: "20px" }}>
@@ -74,7 +74,7 @@ class Uploader extends React.Component {
 }
 
 const formConfiguration = {
-  form: "thread-form"
+  form: "post-form"
 };
 
 export default reduxForm(formConfiguration)(Uploader);

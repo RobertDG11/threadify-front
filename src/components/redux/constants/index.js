@@ -36,3 +36,7 @@ export const JOIN_GROUP = "JOIN_GROUP";
 export const LEAVE_GROUP = "LEAVE_GROUP";
 export const CREATE_THREAD = "CREATE_THREAD";
 export const UPDATE_GROUP = "UPDATE_GROUP";
+export const ADD_TAGS = "ADD_TAGS";
+export const GET_POST = "GET_POST";
+export const GET_REPLIES = "GET_REPLIES";
+export const ADD_REPLIES = "ADD_REPLIES";

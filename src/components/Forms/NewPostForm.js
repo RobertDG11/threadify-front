@@ -6,7 +6,8 @@ import {
   Segment,
   Header,
   Message,
-  Dropdown
+  Dropdown,
+  Search
 } from "semantic-ui-react";
 import { reduxForm, Field } from "redux-form";
 import { withRouter } from "react-router-dom";
@@ -16,10 +17,11 @@ import { login } from "../redux/reducers/authReducer";
 import { Required, Email } from "./Validation";
 import Aux from "../../hoc/aux";
 import Uploader from "../CloudinaryUploader";
-import { addThread } from "../redux/reducers/threadReducer";
+import { addPost, addTags } from "../redux/reducers/postReducer";
 import TextareaAutosize from "react-textarea-autosize";
-import CloudinaryUploader from "../CloudinaryUploader";
+import CloudinaryUploader from "../CloudinaryUploaderPost";
 import { Editor } from "@tinymce/tinymce-react";
+import _ from "lodash";
 
 const FormField = ({
   input,
@@ -57,27 +59,6 @@ const FormField = ({
     </Form.Field>
   );
 };
-
-// const submitHandle = async data => {
-//   if (valid) {
-//     const { name, description, type, coverPhoto } = data;
-
-//     const thread = {
-//       name,
-//       description,
-//       type,
-//       coverPhoto: coverPhoto
-//         ? coverPhoto
-//         : "https://res.cloudinary.com/robertdg11/image/upload/v1562046764/threads/default-bg.jpg.imgix_.banner.jpg.png",
-//       ownerId: props.user.id
-//     };
-//   }
-
-//   const result = await props.addThread(thread);
-
-//   props.modifyOpenModal();
-//   props.history.push(`/thread/${result.data.id}`);
-// };
 
 const options = [
   {
@@ -134,13 +115,44 @@ class ConnectedLoginForm extends React.Component {
     text: "",
     searchQuery: "",
     value: [],
-    media: ""
+    tags: [],
+    media: "",
+    isLoading: false,
+    results: [],
+    searchValue: ""
   };
   handleChange = (e, { searchQuery, value }) => {
-    this.setState({ searchQuery, value });
+    this.setState({
+      searchQuery,
+      value,
+      tags: value.map(val => ({
+        tag: val,
+        postId: 1,
+        color: options.find(option => option.value === val).color
+      }))
+    });
   };
 
   handleSearchChange = (e, { searchQuery }) => this.setState({ searchQuery });
+
+  handleResultSelect = (e, { result }) =>
+    this.setState({ searchValue: result.title, threadId: result.id });
+
+  handleSearchChangeThread = (e, { value }) => {
+    this.setState({ isLoading: true, searchValue: value });
+
+    setTimeout(() => {
+      //if (this.state.value.length < 1) return this.setState(initialState);
+
+      const re = new RegExp(_.escapeRegExp(this.state.searchValue), "i");
+      const isMatch = result => re.test(result.title);
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(this.props.threads, isMatch)
+      });
+    }, 300);
+  };
 
   handleBold = () => {
     this.setState({ text: `${this.state.text}<b></b>` });
@@ -155,14 +167,59 @@ class ConnectedLoginForm extends React.Component {
   };
 
   handleEditorChange = e => {
-    console.log("Content was updated:", e.target.getContent());
     this.setState({ text: e.target.getContent() });
   };
 
-  render() {
+  submitHandle = async data => {
     const { valid } = this.props;
+    if (valid && this.state.searchValue) {
+      const { title, upload } = data;
+      let media = "none";
+
+      if (upload) {
+        media = upload;
+      }
+
+      const post = {
+        title,
+        text: this.state.text,
+        media: upload,
+        status: "ACCEPTED",
+        ownerId: this.props.user.id,
+        threadId: this.state.threadId
+      };
+
+      const response = await this.props.addPost(post);
+      let tags = this.state.tags;
+
+      //   const result = await this.props.addTags(
+      //     tags.map(tag => ({
+      //       tag: tag.tag,
+      //       color: tag.color,
+      //       post: response.data.id
+      //     }))
+      //   );
+
+      //console.log(result);
+
+      this.props.history.push(`/front`);
+    }
+  };
+
+  render() {
+    const { isLoading, searchValue, results } = this.state;
     return (
       <Aux>
+        <Search
+          loading={isLoading}
+          onResultSelect={this.handleResultSelect}
+          onSearchChange={_.debounce(this.handleSearchChangeThread, 500, {
+            leading: true
+          })}
+          results={results}
+          value={searchValue}
+          style={{ padding: "25px" }}
+        />
         <Form style={{ padding: "25px" }}>
           <Field
             component={FormField}
@@ -189,7 +246,7 @@ class ConnectedLoginForm extends React.Component {
             renderLabel={renderLabel}
             style={{ width: "100%", marginTop: "10px" }}
           />
-          <CloudinaryUploader post field="media" />
+          <CloudinaryUploader post field="upload" />
           {/* <Button.Group style={{ marginTop: "20px" }}>
             <Button onClick={this.handleBold} icon>
               <Icon name="bold" />
@@ -226,7 +283,7 @@ class ConnectedLoginForm extends React.Component {
           <Editor
             apiKey="z7wifel0cg6x4z0cyqxre8pspd888fbw8xym4umkr1emgjqo"
             init={{
-              height: 300,
+              height: 500,
               menubar: false,
               plugins: [
                 "advlist autolink lists link image charmap print preview anchor textcolor",
@@ -243,6 +300,13 @@ class ConnectedLoginForm extends React.Component {
             }}
             onChange={this.handleEditorChange}
           />
+          <Button
+            style={{ width: "50%", margin: "20px auto" }}
+            onClick={this.props.handleSubmit(this.submitHandle)}
+            attached="bottom"
+          >
+            <Button.Content>Create post</Button.Content>
+          </Button>
         </Form>
       </Aux>
     );
@@ -261,7 +325,8 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addThread: thread => dispatch(addThread(thread))
+    addPost: post => dispatch(addPost(post)),
+    addTags: tags => dispatch(addTags(tags))
   };
 }
 

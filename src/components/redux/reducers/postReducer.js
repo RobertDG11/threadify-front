@@ -5,7 +5,9 @@ import {
   DELETE_POST,
   UPDATE_POST,
   GET_POSTS,
-  RESET_POSTS
+  RESET_POSTS,
+  ADD_TAGS,
+  GET_POST
 } from "../constants/index";
 import { LOCATION_CHANGE } from "react-router-redux";
 
@@ -14,11 +16,26 @@ import { toast } from "react-toastify";
 const initialState = {
   posts: [],
   totalItems: 0,
-  currentPage: 1
+  currentPage: 1,
+  post: {}
 };
 
 function postReducer(state = initialState, action) {
   switch (action.type) {
+    case ADD_TAGS:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post.id === action.payload[0].id ? (post.tags = action.payload) : post
+        )
+      };
+
+    case GET_POST:
+      return {
+        ...state,
+        post: action.payload
+      };
+
     case ADD_POST:
       return {
         ...state,
@@ -33,7 +50,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.posts.map(post =>
-          post.id === action.payload.id ? (post = action.payload) : post
+          post.id === action.payload.postId ? (post = action.payload) : post
         )
       };
     case GET_POSTS:
@@ -59,7 +76,8 @@ export const getPosts = (
   size,
   sort,
   type,
-  threadId
+  threadId,
+  postId
 ) => async dispatch => {
   try {
     let result;
@@ -71,6 +89,8 @@ export const getPosts = (
       result = await axios.get(
         `/posts?page="${page}"&size=${size}&sort=${sort}`
       );
+    } else if (type === "post") {
+      result = axios.get(`/posts/${postId}`);
     }
 
     dispatch({ type: GET_POSTS, payload: result });
@@ -79,6 +99,47 @@ export const getPosts = (
     toast.error("Something happened! Please try again!", {
       position: toast.POSITION.TOP_CENTER
     });
+  }
+};
+
+export const getPost = id => async dispatch => {
+  try {
+    const result = await axios.get(`/posts/${id}`);
+
+    dispatch({ type: GET_POST, payload: result.data });
+    return result;
+  } catch (e) {
+    toast.error("Something happened! Please try again!", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
+};
+
+export const addPost = post => async dispatch => {
+  try {
+    const result = await axios.post(`/posts`, post);
+
+    dispatch({ type: ADD_POST, payload: result.data });
+    //dispatch({ type: ADD_TAGS, payload: tags });
+    return result;
+  } catch (e) {
+    toast.error("Something happened! Please try again!", {
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
+};
+
+export const addTags = tags => async dispatch => {
+  try {
+    const response = await axios.post("/tags/all", tags);
+
+    dispatch({ type: ADD_POST, payload: response.data });
+
+    return response;
+  } catch (e) {
+    // toast.error("Something happened! Please try again!", {
+    //   position: toast.POSITION.TOP_CENTER
+    // });
   }
 };
 

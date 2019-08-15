@@ -6,6 +6,7 @@ import schedulerReducer from "./reducers/schedulerReducer";
 import literalsReducer from "./reducers/literalsReducer";
 import formReducer from "./reducers/formReducer";
 import threadReducer from "./reducers/threadReducer";
+import repliesReducer from "./reducers/replyReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
@@ -45,7 +46,8 @@ const reducer = combineReducers({
   literals: literalsReducer,
   formCustom: persistedReducerForm,
   posts: postReducer,
-  threads: threadReducer
+  threads: threadReducer,
+  replies: repliesReducer
 });
 
 export const store = createStore(
